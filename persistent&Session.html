@@ -1,0 +1,150 @@
+<head>
+<style>
+   
+   #GDPRInfo{
+      width:400px;
+      height:600px;
+      background:#bebebe;
+      padding:20px;
+   }
+   
+   #agreeButton{
+      padding:5px;
+      margin:10px 0px 0px 0px;
+   }
+   
+</style>
+</head>
+
+<div id="GDPRInfo">
+   <h2>
+      Viktig information för <span id="userName">$name</span>
+   </h2>
+   <p>
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+   </p>
+   <button id="button">
+      Godkänn
+   </button>
+</div>
+<script>
+
+//http://www.devx.com/tips/Tip/23744   
+      
+   
+   readCookie(); 
+   displayVarningDiv();
+      
+    var loggedInUser = document.getElementById("userName").textContent;
+    var readArray = [];
+   
+   document.getElementById('button').onclick = function (){      
+	set_cookie("persistentUser", loggedInUser); 
+   set_sessionCookie("sessionUser", loggedInUser);
+   jQuery("#GDPRInfo").fadeOut();
+      
+   var pname = read_cookie("persistentUser");
+   var sname = read_cookie("sessionUser");
+   console.log("Persistent: " + pname);
+   console.log("Session: " + sname);
+      
+   }
+   
+
+   function readCookie(){
+   console.log("Presistent: " +  read_cookie("persistentUser"));
+   console.log("Session: " +  read_cookie("sessionUser"));
+   }
+    
+   
+   function displayVarningDiv(){
+      if(read_cookie("persistentUser") == "System"  && read_cookie("sessionUser") == "System"){
+      document.getElementById('GDPRInfo').style.display = "none"; 
+      }else {
+      document.getElementById('GDPRInfo').style.display = "block";  
+      }
+   }
+      
+          
+	function set_cookie (name, value, path)
+	{
+        // Build the expiration date string:
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        var expiration_date = new Date(year + 1, month, day);
+     
+        console.log(expiration_date);
+        expiration_date = expiration_date.toGMTString();
+
+        // Build the set-cookie string:
+        var cookie_string = escape (name) + "=" + escape (value) + "; expires=" + expiration_date;
+        
+   	  if (path != null)
+            cookie_string += "; path=" + path;
+
+        // Create/update the cookie:
+        document.cookie = cookie_string;
+        console.log("Persisten cookie: " + cookie_string);
+   }
+   
+      
+   
+   function set_sessionCookie(name, value, path){
+      
+      var session_cookie = escape(name) + "=" + escape(value) + ";";
+      
+       if (path != null)
+            session_cookie += "; path=" + path;
+      
+      document.cookie = session_cookie;
+      console.log("Session cookie: " + session_cookie);
+      
+       
+   }
+   
+    
+ 
+   function read_cookie (key)	{
+
+        // Get cookie string and separate into individual cookie phrases:
+        var cookie_string = "" + document.cookie;
+        var cookie_array = cookie_string.split ("; ");  // creates a array next to the sign ";"
+      
+      var returnValue = "";
+
+        // Scan for desired cookie:
+        for (var i = 0; i < cookie_array.length; ++ i){
+           
+         var single_cookie = cookie_array[i] . split ("=");
+           
+           if(single_cookie[0] == "persistentUser"){
+                var name  = unescape (single_cookie [0]);
+                var value = unescape (single_cookie [1]);
+              
+              if(key == name)
+                 returnValue = value;
+
+              
+           }else if(single_cookie[0] == "sessionUser"){
+                var name  = unescape (single_cookie [0]);
+                var value = unescape (single_cookie [1]);
+              
+              if(key == name)
+                returnValue = value;
+
+           }
+           
+        }
+
+        // Cookie was not found:
+      return returnValue;
+	}
