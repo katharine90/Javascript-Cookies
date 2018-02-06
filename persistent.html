@@ -1,5 +1,7 @@
   
-   var loggedInUser = document.getElementById("userName").textContent;
+//http://www.devx.com/tips/Tip/23744   
+
+var loggedInUser = document.getElementById("userName").textContent;
    var username = read_cookie("UsernameX");   
   
    readCookie(); 
@@ -7,7 +9,7 @@
    
    document.getElementById('button').onclick = function (){   
    set_cookie("UsernameX", loggedInUser);
-   jQuery("#GDPRInfo").fadeOut();
+   jQuery("#div").fadeOut();
       
    username = read_cookie("UsernameX");
    console.log(username);
