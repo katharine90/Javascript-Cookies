@@ -8,7 +8,7 @@
    document.getElementById('button').onclick = function (){      
 	set_cookie("persistentUser", loggedInUser); 
    set_sessionCookie("sessionUser", loggedInUser);
-   jQuery("#GDPRInfo").fadeOut();
+   jQuery("#div").fadeOut();
       
    var pname = read_cookie("persistentUser");
    var sname = read_cookie("sessionUser");
