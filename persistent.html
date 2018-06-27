@@ -28,28 +28,25 @@ var loggedInUser = document.getElementById("userName").textContent;
       }
    }
           
-	function set_cookie (name, value, path)
-	{
-        // Build the expiration date string:
-        var d = new Date();
-		  var year = d.getFullYear();
-		  var month = d.getMonth();
-		  var day = d.getDate();
-        var expiration_date = new Date(year + 1, month, day);
-     
-        console.log(expiration_date);
-        expiration_date = expiration_date.toGMTString();
+function set_persistent_cookie (name, value)	{
 
-        // Build the set-cookie string:
+        var d = new Date();
+        var year = d.getFullYear();
+	var month = d.getMonth();
+	var day = d.getDate();
+        var hours = d.getHours();
+        var minutes = d.getMinutes();
+        var sec = d.getSeconds();
+        var milsec = d.getMilliseconds();       
+                     
+        var expiration_date = new Date(year + 1, month, day, hours, minutes, sec, milsec);         
+       // expiration_date = expiration_date.toUTCString();
+
         var cookie_string = escape (name) + "=" + escape (value) + "; expires=" + expiration_date;
         
-   	  if (path != null)
-            cookie_string += "; path=" + path;
-
-        // Create/update the cookie:
         document.cookie = cookie_string;
-        console.log(cookie_string);
-	}  
+        console.log("Main Persisten cookie: " + cookie_string);
+   }
    
     
  
